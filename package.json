@@ -1,0 +1,25 @@
+{
+  "name": "connectduet",
+  "version": "0.1.0",
+  "description": "Local mailboxes for Claude Code, Codex and other MCP agents, with an optional Discord bridge.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=24.0.0" },
+  "bin": { "connectduet": "src/cli.mjs" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "demo": "node src/cli.mjs demo",
+    "setup": "node src/cli.mjs setup",
+    "start": "node src/cli.mjs start",
+    "doctor": "node src/cli.mjs doctor",
+    "check:release": "node scripts/check-release.mjs",
+    "test:install": "node scripts/smoke-install.mjs"
+  },
+  "files": ["src/", "scripts/", "docs/", "README.md", "LICENSE", "SECURITY.md", "CHANGELOG.md", "CONTRIBUTING.md", "Start-ConnectDuet.cmd", "Start-ConnectDuet.command", "start-connectduet.sh"],
+  "repository": { "type": "git", "url": "https://github.com/yasirwhite/ConnectDuet.git" },
+  "bugs": { "url": "https://github.com/yasirwhite/ConnectDuet/issues" },
+  "homepage": "https://github.com/yasirwhite/ConnectDuet#readme",
+  "keywords": ["mcp", "claude-code", "codex", "discord", "agents", "messaging"],
+  "dependencies": { "@modelcontextprotocol/sdk": "1.32.2" },
+  "bundleDependencies": ["@modelcontextprotocol/sdk"]
+}

@@ -1,0 +1,17 @@
+node_modules/
+.connectduet/
+.env
+.env.*
+!.env.example
+secrets.json
+config.local.json
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.log
+*.tgz
+*.zip
+coverage/
+.DS_Store
+Thumbs.db
