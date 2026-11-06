@@ -4,14 +4,30 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { randomUUID } from 'node:crypto';
 import { homeDir, loadConfig, saveConfig, AGENT_ID } from './config.mjs';
 import { formatCommand, registrationArgs, resolveClientCommand } from './client-command.mjs';
 
 const execFileAsync = promisify(execFile);
 const cliPath = fileURLToPath(import.meta.url);
-const BOOLEAN_OPTIONS = new Set(['help', 'version', 'local', 'force', 'channel', 'install', 'network', 'session']);
-const VALUE_OPTIONS = new Set(['home', 'agent', 'from', 'to', 'text', 'id', 'client', 'label', 'limit', 'reply-to', 'cwd', 'scope']);
-export const HELP = `ConnectDuet — durable messages between your AI sessions
+const BOOLEAN_OPTIONS = new Set(['help', 'version', 'local', 'force', 'channel', 'install', 'network', 'session', 'stdin']);
+const VALUE_OPTIONS = new Set(['home', 'agent', 'from', 'to', 'text', 'id', 'client', 'label', 'limit', 'reply-to', 'cwd', 'scope', 'connection', 'key', 'text-file']);
+export const HELP = `ConnectDuet — orchestrate and message your AI sessions
+
+Native router mode (requires a compatible local router and private connection):
+  connectduet router-peers --connection FILE
+  connectduet router-send --connection FILE --to ID --text TEXT [--key KEY] [--reply-to MESSAGE_ID]
+  connectduet router-reply --connection FILE --id MESSAGE_ID --text TEXT [--key KEY]
+                                          Or use --text-file FILE / --stdin for exact UTF-8
+  connectduet router-inbox --connection FILE [--limit N]
+  connectduet router-ack --connection FILE --id MESSAGE_ID
+  connectduet router-status --connection FILE --id MESSAGE_ID
+  connectduet router-mcp --connection FILE
+  connectduet router-connect --connection FILE --client claude|codex [--session|--install]
+                                          Claude --session: private launch configuration
+                                          Claude registration: --scope local|project|user
+
+Standalone local mailbox mode:
 
   connectduet demo                         Try it locally, no accounts required
   connectduet launch                       Open the interactive setup menu
@@ -81,14 +97,61 @@ async function withSignal(operation) {
   finally { process.removeListener('SIGINT', abort); process.removeListener('SIGTERM', abort); }
 }
 
-export async function main(argv = process.argv.slice(2), { write = console.log, error = console.error } = {}) {
+export async function main(argv = process.argv.slice(2), { write = console.log, error = console.error, input = process.stdin } = {}) {
   try {
     const { command, positional, options } = parseArgs(argv);
     if (options.version) { write(JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version); return 0; }
     if (options.help || command === 'help') { write(HELP); return 0; }
     if (positional.length && !(command === 'agent' && positional.length === 1 && positional[0] === 'add')) throw new Error('Unexpected positional arguments. See --help.');
     const home = options.home ? resolve(options.home) : homeDir();
-    if (command === 'launch') {
+    if (command === 'router-mcp') {
+      checkOptions(command, options, ['connection']);
+      const { runRouterMcp } = await import('./router-mcp.mjs');
+      await runRouterMcp({ connectionFile: required(options, 'connection') });
+    } else if (command === 'router-connect') {
+      checkOptions(command, options, ['connection', 'client', 'session', 'install', 'scope']);
+      if (options.session && options.install) throw new Error('--session cannot be combined with --install.');
+      const { prepareRouterConnect } = await import('./router-connect.mjs');
+      const registration = await prepareRouterConnect({ connectionFile: required(options, 'connection'), client: required(options, 'client'),
+        session: Boolean(options.session), scope: options.scope, home, cliPath });
+      write(formatCommand(registration.command, registration.args));
+      if (options.session) {
+        write(`Private session configuration: ${registration.path}`);
+        write('Run the printed command in your project. Only this router MCP entry is loaded; Claude was not launched.');
+      } else if (options.install) {
+        const client = resolveClientCommand(registration.command);
+        try {
+          const result = await execFileAsync(client.command, [...client.prefix, ...registration.args], { windowsHide: true, timeout: 30000, maxBuffer: 256 * 1024 });
+          if (result.stdout.trim()) write(result.stdout.trim());
+          if (result.stderr.trim()) error(result.stderr.trim());
+        } catch { throw new Error('Router MCP registration failed. Run the printed command to inspect client setup; no credential was printed.'); }
+        write(`Registered ${registration.serverName}. Restart or reload the client.`);
+      } else write('Run the printed command, or add --install to apply this registration.');
+      write('The router determines native delivery. This adapter does not create native desktop connectors.');
+    } else if (['router-peers', 'router-send', 'router-reply', 'router-inbox', 'router-ack', 'router-status'].includes(command)) {
+      const allowed = { 'router-peers': [], 'router-send': ['to', 'text', 'text-file', 'stdin', 'key', 'reply-to'], 'router-reply': ['id', 'text', 'text-file', 'stdin', 'key'],
+        'router-inbox': ['limit'], 'router-ack': ['id'], 'router-status': ['id'] };
+      checkOptions(command, options, ['connection', ...allowed[command]]);
+      const { routerClientFromFile } = await import('./router-connection.mjs');
+      const { client } = routerClientFromFile(required(options, 'connection'));
+      let result;
+      if (command === 'router-peers') result = await client.peers();
+      else if (command === 'router-inbox') result = await client.inbox({ limit: Number(options.limit ?? 20) });
+      else if (command === 'router-ack') result = await client.ack({ messageId: required(options, 'id') });
+      else if (command === 'router-status') result = await client.status({ messageId: required(options, 'id') });
+      else {
+        const { readRouterText } = await import('./router-text.mjs');
+        const text = await readRouterText(options, { input });
+        const idempotencyKey = options.key === undefined ? randomUUID() : required(options, 'key');
+        if (!/^[A-Za-z0-9_-]{8,128}$/.test(idempotencyKey)) throw new Error('--key needs 8–128 letters, digits, underscores, or hyphens.');
+        error(`Idempotency key: ${idempotencyKey}. Keep this key for an identical retry if the result is uncertain.`);
+        result = command === 'router-send'
+          ? await client.send({ to: required(options, 'to'), text, idempotencyKey, replyTo: options['reply-to'] })
+          : await client.reply({ messageId: required(options, 'id'), text, idempotencyKey });
+        result = { idempotencyKey, ...result };
+      }
+      write(JSON.stringify(result, null, 2));
+    } else if (command === 'launch') {
       checkOptions(command, options, []);
       const { launch } = await import('./launcher.mjs'); await launch({ home, write });
     } else if (command === 'setup') {

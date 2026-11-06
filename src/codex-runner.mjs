@@ -152,7 +152,7 @@ export async function runCodex({ home, agentId, cwd, signal, onStatus = console.
     const command = resolveCommand('codex');
     const child = spawnImpl(command.command, [...command.prefix, 'app-server'], { cwd, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'ignore'] });
     rpc = new CodexRpc(child, { timeoutMs: requestTimeoutMs });
-    await rpc.call('initialize', { clientInfo: { name: 'connectduet', title: 'ConnectDuet managed runner', version: '0.1.0' } });
+    await rpc.call('initialize', { clientInfo: { name: 'connectduet', title: 'ConnectDuet managed runner', version: '0.2.0' } });
     rpc.write({ method: 'initialized', params: {} });
     const effective = await rpc.call('config/read', { includeLayers: false, cwd });
     const overrides = disabledIntegrations(effective?.config);

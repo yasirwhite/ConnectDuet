@@ -1,5 +1,7 @@
 # Setup time: what we shortened
 
+Version 0.2 adds an existing-router path: an operator issues a private, identity-bound connection file; `router-peers` verifies it and `router-connect` generates client setup. Agents can then use the router's native Claude frontend/Codex steering routes without configuring another Discord bot. The public package does not yet provision those desktop adapters on a fresh computer. Standalone mailboxes below remain the independent fallback.
+
 Implemented in this release:
 
 - Account-free demo: try the message/reply flow before creating a bot or authenticating a model.

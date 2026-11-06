@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+    <title id="title">ConnectDuet: one agent, a whole team</title><desc id="desc">Conceptual overview. A Claude Duet coordinator delegates through ConnectDuet to Claude builder and reviewer sessions using app frontend input, and sends steering to an active Codex session. Replies return to the coordinator. Native delivery requires configured local session routes.</desc>
+    <defs><radialGradient id="glow"><stop stop-color="#3b255e" stop-opacity=".48"/><stop offset="1" stop-color="#080b18" stop-opacity="0"/></radialGradient><linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#171d34"/><stop offset="1" stop-color="#0f1528"/></linearGradient><linearGradient id="bridge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#252140"/><stop offset="1" stop-color="#111b31"/></linearGradient><linearGradient id="logo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9c87"/><stop offset="1" stop-color="#b6a0ff"/></linearGradient></defs>
+    <style>text{font-family:Segoe UI,Inter,Arial,sans-serif}</style>
+    <rect width="1280" height="720" fill="#080b18"/><ellipse cx="600" cy="385" rx="670" ry="430" fill="url(#glow)"/>
+    <path d="M 48 218 H 1232" stroke="#222941"/>
+    <g transform="translate(49 40)"><rect x="0" y="1" width="20" height="20" rx="6" fill="none" stroke="url(#logo)" stroke-width="2.6"/><rect x="13" y="14" width="20" height="20" rx="6" fill="none" stroke="url(#logo)" stroke-width="2.6"/></g>
+    <text x="96" y="68" font-size="29" fill="#f5f3ff" font-weight="700" >ConnectDuet</text>
+    <text x="1230" y="63" font-size="12" fill="#a5adc7" font-weight="600" text-anchor="end" letter-spacing="2">ONE COMPUTER. MANY AGENTS.</text>
+    <g transform="translate(64 154) scale(0.9999999999999999)"><text x="0" y="0" font-size="46" fill="#f5f3ff" font-weight="700" letter-spacing="-1.5">One agent. A whole team.</text></g>
+    <text x="64" y="192" font-size="19" fill="#a5adc7" font-weight="400" >Claude Duet delegates. Claude and Codex stay in the conversation.</text>
+    <path d="M 324 418 H 450" stroke="#82dcd1" stroke-width="2" fill="none"/>
+    <path d="M 720 418 C 802 418,806 304,888 304" fill="none" stroke="#ff9c87" stroke-width="2.2" opacity="0.85"/><path d="M 877 299 L 883 304 L 877 309" stroke="#ff9c87" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 720 418 C 804 418,804 444,888 444" fill="none" stroke="#b6a0ff" stroke-width="2.2" opacity="0.85"/><path d="M 877 439 L 883 444 L 877 449" stroke="#b6a0ff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M 720 418 C 804 418,804 584,888 584" fill="none" stroke="#f6cb75" stroke-width="2.2" opacity="0.85"/><path d="M 877 579 L 883 584 L 877 589" stroke="#f6cb75" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 439 413 L 445 418 L 439 423" stroke="#82dcd1" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><rect x="64" y="307" width="260" height="222" rx="24" fill="url(#card)" stroke="#82dcd1"/>
+      <rect x="86" y="330" width="44" height="44" rx="13" fill="#ff9c87" fill-opacity=".12"/><g transform="translate(108 352)" stroke="#ff9c87" stroke-width="2.3" stroke-linecap="round"><path transform="rotate(0)" d="M -12.5 0 H 12.5"/><path transform="rotate(30)" d="M -12.5 0 H 12.5"/><path transform="rotate(60)" d="M -12.5 0 H 12.5"/><path transform="rotate(90)" d="M -12.5 0 H 12.5"/><path transform="rotate(120)" d="M -12.5 0 H 12.5"/><path transform="rotate(150)" d="M -12.5 0 H 12.5"/></g>
+      <text x="144" y="346" font-size="10" fill="#a5adc7" font-weight="600" letter-spacing="1.5">YOUR COORDINATOR</text><text x="144" y="371" font-size="23" fill="#f5f3ff" font-weight="650" >Claude Duet</text>
+      <text x="86" y="415" font-size="19" fill="#f5f3ff" font-weight="450" >“Build it. Review it.</text><text x="86" y="444" font-size="19" fill="#f5f3ff" font-weight="450" >Then bring it together.”</text>
+      <rect x="86" y="470" width="216" height="34" rx="9" fill="#82dcd1" fill-opacity=".08"/>
+      <circle cx="102" cy="487" r="3.5" fill="#82dcd1"/>
+      <text x="114" y="492" font-size="12" fill="#82dcd1" font-weight="500" >Replies in context</text></g>
+    <g><rect x="450" y="347" width="270" height="148" rx="24" fill="url(#bridge)" stroke="#82dcd1" stroke-opacity=".8"/>
+      <path d="M 475 377 H 493 Q 503 377 503 387 V 397 M 503 377 H 521 Q 531 377 531 387 V 397" fill="none" stroke="#b6a0ff" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="475" cy="377" r="3" fill="#ff9c87"/><circle cx="503" cy="397" r="3" fill="#b6a0ff"/><circle cx="531" cy="397" r="3" fill="#f6cb75"/>
+      <text x="475" y="435" font-size="27" fill="#f5f3ff" font-weight="700" >ConnectDuet</text><text x="475" y="465" font-size="14" fill="#a5adc7" font-weight="400" >Discover  ·  Send  ·  Reply</text></g>
+    <g><rect x="888" y="247" width="328" height="114" rx="20" fill="url(#card)" stroke="#ff9c87" stroke-opacity="0.8"/>
+      <rect x="910" y="270" width="42" height="42" rx="12" fill="#ff9c87" fill-opacity=".1"/>
+      <g transform="translate(931 291)" stroke="#ff9c87" stroke-width="2.3" stroke-linecap="round"><path transform="rotate(0)" d="M -11.5 0 H 11.5"/><path transform="rotate(30)" d="M -11.5 0 H 11.5"/><path transform="rotate(60)" d="M -11.5 0 H 11.5"/><path transform="rotate(90)" d="M -11.5 0 H 11.5"/><path transform="rotate(120)" d="M -11.5 0 H 11.5"/><path transform="rotate(150)" d="M -11.5 0 H 11.5"/></g>
+      <text x="966" y="286" font-size="21" fill="#f5f3ff" font-weight="650" >Claude · Builder</text><text x="966" y="309" font-size="14" fill="#a5adc7" font-weight="400" >Message enters the app frontend</text>
+      <circle cx="917" cy="335" r="3" fill="#ff9c87"/>
+      <text x="929" y="340" font-size="12" fill="#ff9c87" font-weight="500" letter-spacing=".3">FRIENDLY CLAUDE SESSION</text></g>
+    <g><rect x="888" y="387" width="328" height="114" rx="20" fill="url(#card)" stroke="#b6a0ff" stroke-opacity="0.8"/>
+      <rect x="910" y="410" width="42" height="42" rx="12" fill="#b6a0ff" fill-opacity=".1"/>
+      <g transform="translate(931 431)" stroke="#b6a0ff" stroke-width="2.3" stroke-linecap="round"><path transform="rotate(0)" d="M -11.5 0 H 11.5"/><path transform="rotate(30)" d="M -11.5 0 H 11.5"/><path transform="rotate(60)" d="M -11.5 0 H 11.5"/><path transform="rotate(90)" d="M -11.5 0 H 11.5"/><path transform="rotate(120)" d="M -11.5 0 H 11.5"/><path transform="rotate(150)" d="M -11.5 0 H 11.5"/></g>
+      <text x="966" y="426" font-size="21" fill="#f5f3ff" font-weight="650" >Claude · Reviewer</text><text x="966" y="449" font-size="14" fill="#a5adc7" font-weight="400" >Message enters the app frontend</text>
+      <circle cx="917" cy="475" r="3" fill="#b6a0ff"/>
+      <text x="929" y="480" font-size="12" fill="#b6a0ff" font-weight="500" letter-spacing=".3">FRIENDLY CLAUDE SESSION</text></g>
+    <g><rect x="888" y="527" width="328" height="114" rx="20" fill="url(#card)" stroke="#f6cb75" stroke-opacity="0.8"/>
+      <rect x="910" y="550" width="42" height="42" rx="12" fill="#f6cb75" fill-opacity=".1"/>
+      <path d="M 922 563 L 929 570 L 922 577 M 933 577 H 940" fill="none" stroke="#f6cb75" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="966" y="566" font-size="21" fill="#f5f3ff" font-weight="650" >Codex · Implementer</text><text x="966" y="589" font-size="14" fill="#a5adc7" font-weight="400" >Steers the selected active session</text>
+      <circle cx="917" cy="615" r="3" fill="#f6cb75"/>
+      <text x="929" y="620" font-size="12" fill="#f6cb75" font-weight="500" letter-spacing=".3">DIRECT SESSION STEERING</text></g>
+    
+    <text x="64" y="578" font-size="11" fill="#82dcd1" font-weight="700" letter-spacing="1.8">KEEP THE CONVERSATION MOVING</text>
+    <text x="64" y="613" font-size="20" fill="#f5f3ff" font-weight="500" >Claude to Claude. Claude to Codex. Back again.</text>
+    <text x="64" y="685" font-size="12" fill="#626d8e" font-weight="500" >CONCEPTUAL OVERVIEW  ·  Native delivery uses configured local session routes.</text>
+    <rect x="64" y="650" width="656" height="2" rx="1" fill="#232b44"/><rect x="64" y="650" width="590.4" height="2" rx="1" fill="#82dcd1"/>
+    </svg>

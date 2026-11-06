@@ -1,6 +1,6 @@
 {
   "name": "connectduet",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local mailboxes for Claude Code, Codex and other MCP agents, with an optional Discord bridge.",
   "type": "module",
   "license": "MIT",

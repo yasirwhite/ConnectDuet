@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ConnectDuet — one agent, a whole team</title>
+<style>html,body{margin:0;background:#080b18;width:1280px;height:720px;overflow:hidden}#root{width:1280px;height:720px}svg{display:block}</style></head>
+<body><div id="root" aria-label="Conceptual overview: one Claude Duet coordinator sends tasks through ConnectDuet to Claude frontend sessions and steers an active Codex session. Replies return to the coordinator."></div>
+<script src="scene.js"></script>
+<script>
+window.DURATION=12;
+window.renderAtTime=(t)=>{document.querySelector('#root').innerHTML=ConnectDuetScene.frame(t)};
+window.renderAtTime(10.8);
+window.__ready=true;
+</script></body></html>

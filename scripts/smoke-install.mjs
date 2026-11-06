@@ -10,12 +10,14 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 if (!process.env.npm_execpath) throw new Error('Run this check with npm run test:install.');
 const temp = mkdtempSync(join(tmpdir(), 'connectduet-install-'));
 const npm = args => execFileSync(process.execPath, [process.env.npm_execpath, ...args], {
-  cwd: root, encoding: 'utf8', windowsHide: true, timeout: 180000, maxBuffer: 8 * 1024 * 1024,
+  cwd: root, encoding: 'utf8', windowsHide: true, timeout: 600000, maxBuffer: 8 * 1024 * 1024,
 });
 try {
+  console.log('Packing the release for a fresh installation check.');
   const [packed] = JSON.parse(npm(['pack', '--json', '--pack-destination', temp]));
   assert(packed.bundled.includes('@modelcontextprotocol/sdk'), 'Release must bundle its runtime SDK.');
   const prefix = join(temp, 'fresh install');
+  console.log('Installing bundled dependencies offline into a temporary directory (up to ten minutes on slow disks).');
   npm(['install', '--global', '--prefix', prefix, '--cache', join(temp, 'empty-cache'), '--offline',
     '--ignore-scripts', '--no-fund', '--no-audit', join(temp, packed.filename)]);
   const cli = process.platform === 'win32' ? join(prefix, 'node_modules', 'connectduet', 'src', 'cli.mjs')

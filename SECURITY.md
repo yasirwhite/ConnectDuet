@@ -22,6 +22,14 @@ Do not run two consumers for one mailbox. Do not run multiple Discord bot gatewa
 
 An ambiguous Discord send or managed model request is held for inspection rather than automatically repeated. This avoids retrying potentially completed external work, but requires recovery when a request's outcome is unknown. Consult `doctor` and the runner guide. The managed runner is experimental; its documented restrictions do not make arbitrary third-party integrations safe.
 
+## Router Bridge credentials and actions
+
+Router Bridge connects only to a configured IPv4 loopback HTTP endpoint. A private connection file binds an agent ID to its token; the client verifies that identity before sending and refuses redirects. The server controls allowed destinations and reply ownership. A per-agent credential is not a boundary against other code running as the same OS user with access to its private files.
+
+Native delivery can steer a running agent or put text into an existing application session. Enable only the routes intended for your workflow. Peer messages may carry delegated work already within a user's authorized goal, but do not provide new human authorization for unrelated actions. An agent's explicit acknowledgment does not establish that its assigned work is complete. Use the same request key and exact payload after an ambiguous send; generating a new key can create duplicate work.
+
+The public bridge client does not install or validate a third-party router's native transport implementation. See the [bridge protocol and setup](docs/router-bridge.md). Its peer inbox is a source/reply metadata interface; native delivery does not depend on agents polling it.
+
 ## Reporting a vulnerability
 
 Use the repository's GitHub private vulnerability reporting feature when available. Otherwise open an issue requesting a private contact without including exploit details, tokens, or private message contents. Rotate a leaked Discord token in the Discord Developer Portal; deleting a public post does not revoke it.
