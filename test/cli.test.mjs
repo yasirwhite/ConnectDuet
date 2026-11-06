@@ -43,9 +43,10 @@ test('real CLI bootstraps a private home and exchanges durable messages across p
 test('CLI runs through an npm-style POSIX executable symlink', { skip: process.platform === 'win32' }, t => {
   const link = join(temporary(t), 'connectduet');
   symlinkSync(cli, link);
-  const result = spawnSync(process.execPath, [link, '--help'], { encoding: 'utf8', timeout: 10000 });
+  const result = spawnSync(process.execPath, [link, '--version'], { encoding: 'utf8', timeout: 10000 });
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /durable messages/);
+  const version = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
+  assert.equal(result.stdout.trim(), version);
 });
 
 test('setup refuses to overwrite an existing configuration without force', async t => {
